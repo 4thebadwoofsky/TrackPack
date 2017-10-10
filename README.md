@@ -1,1 +1,1 @@
-# Modpack Launcher by XeamSoft & BadWoofsky
+# TrackPack
