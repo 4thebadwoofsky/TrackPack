@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
+  
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+     <title>Tracking-Nummer hinzufügen</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="progress">
+          <div class="indeterminate"></div>
+      </div>
+      <form>
+        <div>
+          <label>Tracking-Nummer</label>
+          <input type="text" id="trackingID" autofocus>
+        </div>
+        <div class="input-field">
+          <select id="paketDienst">
+            <option value="" disabled selected>Paketdienst auswählen</option>
+            <option value="dhl">DHL</option>
+            <option value="hermes">Hermes</option>
+            <option value="dpd">DPD</option>
+          </select>
+          <label>Paketdienst</label>
+        </div>
+        <button class="waves-effect waves-light btn" type="submit">Hinzufügen</button>
+      </form>
+    </div>
+
+    <!-- Insert this line above script imports  -->
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="jquery/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+    <!-- Insert this line after script imports -->
+    <script>if (window.module) module = window.module;</script>
+
+    <script>
+        const electron = require('electron');
+        const {ipcRenderer} = electron;
+
+        $(document).ready(function() {
+          $('select').material_select();
+        });
+
+        document.querySelector('form').addEventListener('submit', submitForm);
+
+        function submitForm(e){
+          e.preventDefault();
+          const trackingID = document.querySelector('#trackingID').value;
+          const paketDienst = document.querySelector('#paketDienst').value;
+
+          ipcRenderer.send('item:add',paketDienst,trackingID);
+        }
+      </script>
+  </body>
+</html>
